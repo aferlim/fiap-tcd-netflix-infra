@@ -6,6 +6,8 @@ services:
       context: consul_server
       dockerfile: Dockerfile
     image: consul_server
+    # restart: always
+    tty: true
     ports:
       - 8300:8300
       - 8301:8301
@@ -16,30 +18,54 @@ services:
       - NODE=consul_server
       - PRIVATE_IP_ADDRESS=33.10.0.2
     networks:
-      consul_network:
-        ipv4_address: 33.10.0.2
+      - consul_network
+        # ipv4_address: 33.10.0.2
   rating_api_1:
     image: aferlim/rating-api:v1
+    # restart: always
+    tty: true
     ports:
       - 8080:3000
     environment:
       - NODE=rating_api_1
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.10
-    dns:
-      - 127.0.0.1
-      - 8.8.8.8
-      - 8.8.4.4
+    # dns:
+    #   - 127.0.0.1
+    #   - 8.8.8.8
+    #   - 8.8.4.4
     depends_on:
       - consul_server
     # volumes:
     #   - ./django:/web
-    cap_add:
-      - NET_ADMIN
+    # cap_add:
+    #   - NET_ADMIN
     networks:
-      consul_network:
-        ipv4_address: 33.10.0.10
-
+      - consul_network
+        # ipv4_address: 33.10.0.10
+  rating_api_2:
+    image: aferlim/rating-api:v1
+    restart: always
+    tty: true
+    ports:
+      - 8081:3000
+    environment:
+      - NODE=rating_api_2
+      - PRIMARY=1
+      - PRIVATE_IP_ADDRESS=33.10.0.11
+    # dns:
+    #   - 127.0.0.1
+    #   - 8.8.8.8
+    #   - 8.8.4.4
+    depends_on:
+      - consul_server
+    # volumes:
+    #   - ./django:/web
+    # cap_add:
+    #   - NET_ADMIN
+    networks:
+      - consul_network
+        # ipv4_address: 33.10.0.11
   # load_balancer:
   #   image: fabiolb/fabio
   #   ports:
@@ -175,6 +201,6 @@ services:
 networks:
   consul_network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 33.10.0.0/16
+    # ipam:
+    #   config:
+    #     - subnet: 33.10.0.0/16
