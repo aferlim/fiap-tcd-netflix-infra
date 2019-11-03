@@ -1,11 +1,15 @@
 FROM ubuntu:18.04
+MAINTAINER Andre Lima <aferlim@gmail.com>
+
+# This is the release of Consul to pull in.
+ENV CONSUL_VERSION=1.6.1
 
 RUN apt-get update && \
     apt-get install -y \
     bash curl nano net-tools zip unzip \
     jq dnsutils iputils-ping
 
-ADD https://releases.hashicorp.com/consul/1.4.4/consul_1.4.4_linux_amd64.zip /tmp/consul.zip
+ADD https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip /tmp/consul.zip
 RUN cd /bin && unzip /tmp/consul.zip && chmod +x /bin/consul && rm /tmp/consul.zip
 
 # Consul ports
