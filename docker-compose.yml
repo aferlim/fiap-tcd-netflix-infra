@@ -17,8 +17,10 @@ services:
     environment:
       - NODE=consul_server
       - PRIVATE_IP_ADDRESS=33.10.0.2
+    volumes:
+      - ./consul_server/data:/data
     networks:
-      - consul_network
+      - netflix_tcd_network
         # ipv4_address: 33.10.0.2
   rating_api_1:
     image: aferlim/rating-api:v1
@@ -31,16 +33,10 @@ services:
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.10
       - PORT=8080
-    # dns:
-    #   - 127.0.0.1
-    #   - 8.8.8.8
-    #   - 8.8.4.4
     depends_on:
       - consul_server
-    # cap_add:
-    #   - NET_ADMIN
     networks:
-      - consul_network
+      - netflix_tcd_network
         # ipv4_address: 33.10.0.10
   rating_api_2:
     image: aferlim/rating-api:v1
@@ -53,151 +49,45 @@ services:
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.11
       - PORT=8080
-    # dns:
-    #   - 127.0.0.1
-    #   - 8.8.8.8
-    #   - 8.8.4.4
     depends_on:
       - consul_server
-    # cap_add:
-    #   - NET_ADMIN
     networks:
-      - consul_network
-        # ipv4_address: 33.10.0.11
-  # load_balancer:
-  #   image: fabiolb/fabio
-  #   ports:
-  #     - 9998:9998
-  #     - 9999:9999
-  #   command: -registry.consul.addr="33.10.0.2:8500"
-  #   networks:
-  #     consul_network:
-  #       ipv4_address: 33.10.0.100
-  # mongo_1:
-  #   build:
-  #     context: mongo
-  #     dockerfile: Dockerfile
-  #   image: mongo_consul
-  #   dns:
-  #     - 127.0.0.1
-  #     - 8.8.8.8
-  #     - 8.8.4.4
-  #   environment:
-  #     - NODE=mongo_1
-  #     - MONGO_PORT=27017
-  #     - PRIMARY_MONGO=33.10.0.3
-  #     - PRIVATE_IP_ADDRESS=33.10.0.3
-  #   restart: always
-  #   ports:
-  #     - 27017:27017
-  #     - 28017:28017
-  #   depends_on:
-  #     - consul_server
-  #     - mongo_2
-  #     - mongo_3
-  #   networks:
-  #     consul_network:
-  #       ipv4_address: 33.10.0.3
-  # mongo_2:
-  #   build:
-  #     context: mongo
-  #     dockerfile: Dockerfile
-  #   image: mongo_consul
-  #   dns:
-  #     - 127.0.0.1
-  #     - 8.8.8.8
-  #     - 8.8.4.4
-  #   environment:
-  #     - NODE=mongo_2
-  #     - MONGO_PORT=27017
-  #     - PRIMARY_MONGO=33.10.0.3
-  #     - PRIVATE_IP_ADDRESS=33.10.0.4
-  #   restart: always
-  #   ports:
-  #     - 27018:27017
-  #     - 28018:28017
-  #   depends_on:
-  #     - consul_server
-  #   networks:
-  #     consul_network:
-  #       ipv4_address: 33.10.0.4
-  # mongo_3:
-  #   build:
-  #     context: mongo
-  #     dockerfile: Dockerfile
-  #   image: mongo_consul
-  #   dns:
-  #     - 127.0.0.1
-  #     - 8.8.8.8
-  #     - 8.8.4.4
-  #   environment:
-  #     - NODE=mongo_3
-  #     - MONGO_PORT=27017
-  #     - PRIMARY_MONGO=33.10.0.3
-  #     - PRIVATE_IP_ADDRESS=33.10.0.5
-  #   restart: always
-  #   ports:
-  #     - 27019:27017
-  #     - 28019:28017
-  #   depends_on:
-  #     - consul_server
-  #   networks:
-  #     consul_network:
-  #       ipv4_address: 33.10.0.5
-  # web_1:
-  #   build:
-  #     context: django
-  #     dockerfile: Dockerfile
-  #   image: web_consul
-  #   ports:
-  #     - 8080:8000
-  #   environment:
-  #     - NODE=web_1
-  #     - PRIMARY=1
-  #     - LOAD_BALANCER=33.10.0.100
-  #     - PRIVATE_IP_ADDRESS=33.10.0.10
-  #   dns:
-  #     - 127.0.0.1
-  #     - 8.8.8.8
-  #     - 8.8.4.4
-  #   depends_on:
-  #     - consul_server
-  #     - mongo_1
-  #   volumes:
-  #     - ./django:/web
-  #   cap_add:
-  #     - NET_ADMIN
-  #   networks:
-  #     consul_network:
-  #       ipv4_address: 33.10.0.10
-  # web_2:
-  #   build:
-  #     context: django
-  #     dockerfile: Dockerfile
-  #   image: web_consul
-  #   ports:
-  #     - 8081:8000
-  #   environment:
-  #     - NODE=web_2
-  #     - LOAD_BALANCER=33.10.0.100
-  #     - PRIVATE_IP_ADDRESS=33.10.0.11
-  #   dns:
-  #     - 127.0.0.1
-  #     - 8.8.8.8
-  #     - 8.8.4.4
-  #   depends_on:
-  #     - consul_server
-  #     - mongo_1
-  #   volumes:
-  #     - ./django:/web
-  #   cap_add:
-  #     - NET_ADMIN
-  #   networks:
-  #     consul_network:
-  #       ipv4_address: 33.10.0.11
-
+      - netflix_tcd_network
+  zoo1:
+    image: zookeeper:3.4.9
+    hostname: zoo1
+    ports:
+      - "2181:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zoo1:2888:3888
+    volumes:
+      - .//kafka/zookeeper/data:/data
+      - ./kafka/zookeeper/datalog:/datalog
+    networks:
+      - netflix_tcd_network
+  kafka1:
+    image: confluentinc/cp-kafka:5.3.1
+    hostname: kafka1
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka1:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zoo1:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - ./kafka/kafka/data:/var/lib/kafka/data
+    depends_on:
+      - zoo1
+    networks:
+      - netflix_tcd_network
 networks:
-  consul_network:
+  netflix_tcd_network:
     driver: bridge
     # ipam:
     #   config:
