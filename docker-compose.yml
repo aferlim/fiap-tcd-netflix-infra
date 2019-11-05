@@ -86,6 +86,50 @@ services:
       - zoo1
     networks:
       - netflix_tcd_network
+  genre_api_1:
+    image: laerccius/genre-api-tcd:first-push
+    tty: true
+    ports:
+      - 8090:80
+      - 8091:443
+    environment:
+      - NODE=genre_api_1
+      - PRIMARY=1
+      - PRIVATE_IP_ADDRESS=33.10.0.13
+    # dns:
+    #   - 127.0.0.1
+    #   - 8.8.8.8
+    #   - 8.8.4.4
+    depends_on:
+      - consul_server
+    # volumes:
+    #   - ./django:/web
+    # cap_add:
+    #   - NET_ADMIN
+    networks:
+      - netflix_tcd_network
+  help_center_api_1:
+    image: laerccius/help-center-api-tcd:second-push
+    tty: true
+    ports:
+      - 9000:80
+      - 9001:443
+    environment:
+      - NODE=help_center_1
+      - PRIMARY=1
+      - PRIVATE_IP_ADDRESS=33.10.0.14
+    # dns:
+    #   - 127.0.0.1
+    #   - 8.8.8.8
+    #   - 8.8.4.4
+    depends_on:
+      - consul_server
+    # volumes:
+    #   - ./django:/web
+    # cap_add:
+    #   - NET_ADMIN
+    networks:
+      - netflix_tcd_network
 networks:
   netflix_tcd_network:
     driver: bridge
