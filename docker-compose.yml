@@ -87,7 +87,7 @@ services:
     networks:
       - netflix_tcd_network
   genre_api_1:
-    image: laerccius/genre-api-tcd:first-push
+    image: laerccius/genre-api-tcd:third-push
     tty: true
     ports:
       - 8090:80
@@ -109,7 +109,7 @@ services:
     networks:
       - netflix_tcd_network
   help_center_api_1:
-    image: laerccius/help-center-api-tcd:second-push
+    image: laerccius/help-center-api-tcd:third-push
     tty: true
     ports:
       - 9000:80
