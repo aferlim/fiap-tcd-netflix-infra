@@ -12,6 +12,55 @@ Este arquivo descreve como subir o datacenter TCD Netflix
 
     docker-compose up
 
+> **Passo 2:** Visualizar filmes de um determinado gênero:
+
+...em construção
+
+> **Passo 3:** Visualizar detalhes de um filme:
+
+...em construção
+
+> **Passo 4:** Visualizar detalhes de um filme:
+
+...em construção
+
+> ...
+
+## Serviços relacionados e seus repositórios:
+
+Movies API:
+
+Rating API: https://github.com/aferlim/fiap-tcd-netflix-rating-api
+
+Rating Worker: https://github.com/aferlim/fiap-tcd-netflix-rating-worker
+
+Genres API:
+
+HelpCenter API:
+
+## Validando as regras de service discovery
+
+Para validar as regras de service discovery, acesse o painel administração do consul:
+
+    http://localhost:85000
+
+Acesse o Menu Services e clique no serviço desejado.
+O Consul mostrará quantas instâncias está rodando para o mesmo DNS.
+
+### Verificando o DNS com o comando DIG
+
+Ainda com o datacenter rodando, acesse o container em modo bash com o comando:
+
+    docker-compose exec rating_api_1 /bin/sh
+
+O OS utilizado é o Alpine, um container linux mais leve. Nele não vem instalado o DIG. Para instalar, já no bash dentro do container, execute:
+
+    curl -L https://github.com/sequenceiq/docker-alpine-dig/releases/download/v9.10.2/dig.tgz|tar -xzv -C /usr/local/bin/
+
+Por último, execute o commando dig para vizualização das configurações de DNS:
+
+    dig @localhost -p 53 rating-api.service.consul SRV
+
 ## Outros comandos
 
 Comandos usuais após todo o datacenter iniciado
