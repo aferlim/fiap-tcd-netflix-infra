@@ -6,7 +6,7 @@ services:
       context: consul_server
       dockerfile: Dockerfile
     image: consul_server
-    # restart: always
+    restart: never
     tty: true
     ports:
       - 8300:8300
@@ -24,7 +24,7 @@ services:
         # ipv4_address: 33.10.0.2
   rating_api_1:
     image: aferlim/rating-api:v1
-    # restart: always
+    restart: never
     tty: true
     ports:
       - 8080:8080
@@ -33,18 +33,20 @@ services:
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.10
       - PORT=8080
+      - MONGO_CONNECTION_STRING=mongodb://aplic.PrmmiarApi:R6vd%231E7Z19OtIc2@mongodb.dev.ltm.grupoltm.com.br:27017/premmiar?readPreference=primary
     dns:
       - 127.0.0.1
       - 8.8.8.8
       - 8.8.4.4
     depends_on:
       - consul_server
+      - mongo_1
     networks:
       - netflix_tcd_network
         # ipv4_address: 33.10.0.10
   rating_api_2:
     image: aferlim/rating-api:v1
-    restart: always
+    restart: never
     tty: true
     ports:
       - 8081:8080
@@ -53,12 +55,14 @@ services:
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.11
       - PORT=8080
+      - MONGO_CONNECTION_STRING=''
     dns:
       - 127.0.0.1
       - 8.8.8.8
       - 8.8.4.4
     depends_on:
       - consul_server
+      - mongo_1
     networks:
       - netflix_tcd_network
   zoo1:
@@ -70,6 +74,10 @@ services:
       ZOO_MY_ID: 1
       ZOO_PORT: 2181
       ZOO_SERVERS: server.1=zoo1:2888:3888
+    dns:
+      - 127.0.0.1
+      - 8.8.8.8
+      - 8.8.4.4
     volumes:
       - .//kafka/zookeeper/data:/data
       - ./kafka/zookeeper/datalog:/datalog
@@ -104,10 +112,10 @@ services:
       - NODE=genre_api_1
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.13
-    # dns:
-    #   - 127.0.0.1
-    #   - 8.8.8.8
-    #   - 8.8.4.4
+    dns:
+      - 127.0.0.1
+      - 8.8.8.8
+      - 8.8.4.4
     depends_on:
       - consul_server
     # volumes:
@@ -126,10 +134,10 @@ services:
       - NODE=help_center_1
       - PRIMARY=1
       - PRIVATE_IP_ADDRESS=33.10.0.14
-    # dns:
-    #   - 127.0.0.1
-    #   - 8.8.8.8
-    #   - 8.8.4.4
+    dns:
+      - 127.0.0.1
+      - 8.8.8.8
+      - 8.8.4.4
     depends_on:
       - consul_server
     # volumes:
@@ -138,6 +146,28 @@ services:
     #   - NET_ADMIN
     networks:
       - netflix_tcd_network
+  mongo_1:
+    build:
+      context: mongo
+      dockerfile: Dockerfile
+    image: mongo_consul
+    dns:
+      - 127.0.0.1
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - NODE=mongo_1
+      - MONGO_PORT=27017
+      - PRIMARY_MONGO=${DOCKER_HOST_IP:-127.0.0.1}
+      - PRIVATE_IP_ADDRESS=33.10.0.3
+    restart: always
+    ports:
+      - 27017:27017
+      - 28017:28017
+    depends_on:
+      - consul_server
+    networks:
+      - consul_network
 networks:
   netflix_tcd_network:
     driver: bridge

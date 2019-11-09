@@ -1,2 +1,8 @@
 kafka*/**
 consul*/**
+/consul_server*/**
+consul_server/data/serf/remote.snapshot
+docker-compose.yml
+kafka/kafka/data/rating-topic-0/00000000000000000000.log
+kafka/kafka/data/recovery-point-offset-checkpoint
+kafka/kafka/data/replication-offset-checkpoint
