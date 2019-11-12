@@ -14,17 +14,48 @@ Este arquivo descreve como subir o datacenter TCD Netflix
 
 > **Passo 2:** Visualizar filmes de um determinado gênero:
 
-...em construção
+Movie API: GET - /movie/byGenre/{genre}
+_Obs: Na api de gêneros contêm apenas a lista de gêneros_
 
 > **Passo 3:** Visualizar detalhes de um filme:
 
+Movie API: GET - /movie
+
+> **Passo 4:** Possibilidade de votar nos filmes que mais gostei:
+
+Rating API: POST - /rating
+
+**Apache Kafka**
+
+1 - Ao enviar uma votação, uma mensagem é enviada ao Kafka.
+2 - Um Worker (Rating Worker) processa a mensagem e envia uma chamada para a api de filmes.
+3 - A Api de Rating mantém o histórico de votações.
+4 - A Api de filmes mantém um consolidado das votações.
+
+> **Passo 5:** Possibilidade de marcar um filme ou série para ser visto no futuro:
+
 ...em construção
 
-> **Passo 4:** Visualizar detalhes de um filme:
+> **Passo 6:** Possibilidade de buscar um filme por palavra-chave:
 
-...em construção
+Movie API: GET - /movie/getByTag/{tag}
 
-> ...
+> **Passo 7:** Possibilidade de exibir os filmes mais vistos por categorias:
+
+​Movie API: GET - /movie​/mostByGenre​/{genre}
+_Obs: Na api de gêneros contêm apenas a lista de gêneros_
+
+> **Passo 8:** Possibilidade de abrir um chamado técnico de algum problema que está acontecendo:
+
+HelpCenter API.
+
+> **Passo 9:** PPossibilidade de visualizar os filmes e séries que já foram assistidos:
+
+Assistir um filme:
+Movie API: PUT - /watch
+
+Assistidos por usuário:
+Movie API: GET - /watch
 
 ## Serviços relacionados e seus repositórios:
 
