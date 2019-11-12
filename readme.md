@@ -8,20 +8,20 @@
 
 Este arquivo descreve como subir o datacenter TCD Netflix
 
-##Passo 1: Subindo a infrastrutura:
+## Passo 1: Subindo a infrastrutura:
 
     docker-compose up
 
-##Passo 2: Visualizar filmes de um determinado gênero:
+## Passo 2: Visualizar filmes de um determinado gênero:
 
 Movie API: GET - /movie/byGenre/{genre}
 _Obs: Na api de gêneros contêm apenas a lista de gêneros_
 
-##Passo 3: Visualizar detalhes de um filme:
+## Passo 3: Visualizar detalhes de um filme:
 
 **Movie API:GET** - /movie
 
-##Passo 4: Possibilidade de votar nos filmes que mais gostei:
+## Passo 4: Possibilidade de votar nos filmes que mais gostei:
 
 **Rating API: POST** - /rating
 
@@ -35,24 +35,24 @@ C - A Api de Rating mantém o histórico de votações.
 
 D - A Api de filmes mantém um consolidado das votações.
 
-##Passo 5: Possibilidade de marcar um filme ou série para ser visto no futuro:
+## Passo 5: Possibilidade de marcar um filme ou série para ser visto no futuro:
 
 ...em construção
 
-##Passo 6: Possibilidade de buscar um filme por palavra-chave:
+## Passo 6: Possibilidade de buscar um filme por palavra-chave:
 
 **Movie API: GET** - /movie/getByTag/{tag}
 
-##Passo 7: Possibilidade de exibir os filmes mais vistos por categorias:
+## Passo 7: Possibilidade de exibir os filmes mais vistos por categorias:
 
 ​**Movie API: GET** - /movie​/mostByGenre​/{genre}
 _Obs: Na api de gêneros contêm apenas a lista de gêneros_
 
-##Passo 8: Possibilidade de abrir um chamado técnico de algum problema que está acontecendo:
+## Passo 8: Possibilidade de abrir um chamado técnico de algum problema que está acontecendo:
 
 **HelpCenter API.**
 
-##Passo 9: Possibilidade de visualizar os filmes e séries que já foram assistidos:
+## Passo 9: Possibilidade de visualizar os filmes e séries que já foram assistidos:
 
 _Assistir um filme:_
 
