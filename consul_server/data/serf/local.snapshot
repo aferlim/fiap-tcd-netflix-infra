@@ -18,3 +18,45 @@ alive: rating_api_1 172.26.0.5:8301
 alive: rating_api_2 172.26.0.6:8301
 clock: 4
 event-clock: 3
+alive: consul_server 172.27.0.2:8301
+alive: rating_api_2 172.27.0.7:8301
+alive: rating_api_1 172.27.0.5:8301
+clock: 5
+event-clock: 4
+not-alive: rating_api_2
+not-alive: rating_api_1
+alive: consul_server 172.28.0.3:8301
+alive: rating_api_1 172.28.0.5:8301
+alive: rating_api_2 172.28.0.6:8301
+clock: 6
+event-clock: 5
+not-alive: rating_api_1
+not-alive: rating_api_2
+alive: consul_server 172.29.0.3:8301
+alive: rating_api_1 172.29.0.6:8301
+alive: rating_api_2 172.29.0.8:8301
+clock: 7
+clock: 8
+event-clock: 6
+not-alive: rating_api_1
+not-alive: rating_api_2
+alive: consul_server 172.30.0.2:8301
+alive: rating_api_1 172.30.0.5:8301
+clock: 9
+alive: rating_api_2 172.30.0.8:8301
+clock: 10
+event-clock: 7
+alive: consul_server 172.30.0.3:8301
+alive: rating_api_2 172.30.0.5:8301
+alive: rating_api_1 172.30.0.7:8301
+clock: 11
+clock: 12
+event-clock: 8
+alive: consul_server 172.30.0.3:8301
+alive: rating_api_1 172.30.0.5:8301
+alive: rating_api_2 172.30.0.8:8301
+clock: 13
+clock: 14
+event-clock: 9
+alive: consul_server 172.18.0.4:8301
+event-clock: 10
