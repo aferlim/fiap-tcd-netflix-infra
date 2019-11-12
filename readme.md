@@ -28,15 +28,15 @@ Este arquivo descreve como subir o datacenter TCD Netflix
 
 ## Serviços relacionados e seus repositórios:
 
-Movies API:
+Movies API: https://github.com/aferlim/fiap-tct-netflix-movies
 
 Rating API: https://github.com/aferlim/fiap-tcd-netflix-rating-api
 
 Rating Worker: https://github.com/aferlim/fiap-tcd-netflix-rating-worker
 
-Genres API:
+Genres API: https://github.com/laerccius/genre-api
 
-HelpCenter API:
+HelpCenter API: https://github.com/laerccius/help-center-api
 
 ## Validando as regras de service discovery
 
@@ -60,6 +60,8 @@ O OS utilizado é o Alpine, um container linux mais leve. Nele não vem instalad
 Por último, execute o commando dig para vizualização das configurações de DNS:
 
     dig @localhost -p 53 rating-api.service.consul SRV
+
+![Consul DNS API Rating](/doc/consul-dns.jpeg)
 
 ## Outros comandos
 
