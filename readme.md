@@ -19,11 +19,11 @@ _Obs: Na api de gêneros contêm apenas a lista de gêneros_
 
 > **Passo 3:** Visualizar detalhes de um filme:
 
-Movie API: GET - /movie
+**Movie API:GET** - /movie
 
 > **Passo 4:** Possibilidade de votar nos filmes que mais gostei:
 
-Rating API: POST - /rating
+**Rating API: POST** - /rating
 
 **Apache Kafka**
 
@@ -41,26 +41,26 @@ D - A Api de filmes mantém um consolidado das votações.
 
 > **Passo 6:** Possibilidade de buscar um filme por palavra-chave:
 
-Movie API: GET - /movie/getByTag/{tag}
+**Movie API: GET** - /movie/getByTag/{tag}
 
 > **Passo 7:** Possibilidade de exibir os filmes mais vistos por categorias:
 
-​Movie API: GET - /movie​/mostByGenre​/{genre}
+​**Movie API: GET** - /movie​/mostByGenre​/{genre}
 _Obs: Na api de gêneros contêm apenas a lista de gêneros_
 
 > **Passo 8:** Possibilidade de abrir um chamado técnico de algum problema que está acontecendo:
 
-HelpCenter API.
+**HelpCenter API.**
 
 > **Passo 9:** PPossibilidade de visualizar os filmes e séries que já foram assistidos:
 
 _Assistir um filme:_
 
-Movie API: PUT - /watch
+**Movie API: PUT** - /watch
 
 _Assistidos por usuário:_
 
-Movie API: GET - /watch
+**Movie API: GET** - /watch
 
 ## Serviços relacionados e seus repositórios:
 
