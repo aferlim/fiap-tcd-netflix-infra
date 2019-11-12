@@ -28,8 +28,11 @@ Rating API: POST - /rating
 **Apache Kafka**
 
 1 - Ao enviar uma votação, uma mensagem é enviada ao Kafka.
+
 2 - Um Worker (Rating Worker) processa a mensagem e envia uma chamada para a api de filmes.
+
 3 - A Api de Rating mantém o histórico de votações.
+
 4 - A Api de filmes mantém um consolidado das votações.
 
 > **Passo 5:** Possibilidade de marcar um filme ou série para ser visto no futuro:
@@ -51,10 +54,12 @@ HelpCenter API.
 
 > **Passo 9:** PPossibilidade de visualizar os filmes e séries que já foram assistidos:
 
-Assistir um filme:
+_Assistir um filme:_
+
 Movie API: PUT - /watch
 
-Assistidos por usuário:
+_Assistidos por usuário:_
+
 Movie API: GET - /watch
 
 ## Serviços relacionados e seus repositórios:
